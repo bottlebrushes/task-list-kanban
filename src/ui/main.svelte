@@ -489,13 +489,17 @@
 <svelte:window on:mousemove={handleMouseMove} on:mouseup={stopResize} />
 
 <div class="main">
-	<button 
-		class="sidebar-toggle-btn" 
-		on:click={toggleSidebar} 
+	<button
+		class="sidebar-toggle-btn"
+		class:filters-active={isFiltered}
+		on:click={toggleSidebar}
 		aria-label={filtersSidebarExpanded ? "Hide filters" : "Show filters"}
 	>
 		<span class="toggle-icon">{filtersSidebarExpanded ? '◂' : '▸'}</span>
 		<span class="toggle-label">Filters</span>
+		{#if isFiltered}
+			<span class="filter-active-dot" aria-label="Filters active"></span>
+		{/if}
 	</button>
 
 	<div class="board-container" class:sidebar-expanded={filtersSidebarExpanded} style="--sidebar-width: {filtersSidebarWidth}px;">
@@ -739,6 +743,18 @@
 
 			.toggle-label {
 				font-weight: 500;
+			}
+
+			.filter-active-dot {
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				background: var(--interactive-accent);
+				flex-shrink: 0;
+			}
+
+			&.filters-active {
+				color: var(--interactive-accent);
 			}
 		}
 
